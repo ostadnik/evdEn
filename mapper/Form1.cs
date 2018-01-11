@@ -25,6 +25,11 @@ namespace mapper
             InitializeComponent();
         }
 
+        private string getMapName(int x, int y)
+        {
+            return "..\\..\\evdEn\\evdEnContent\\GAME\\MAPS\\WORLD\\" + y.ToString("000") + "-" + x.ToString("000") + ".tmx";
+        }
+
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             OpenFileDialog fd = new OpenFileDialog();
@@ -328,7 +333,7 @@ namespace mapper
                         hasStuff = ProcessChunk(img, roads, yy, xx);
                         if (!hasStuff && xx != 0 && yy != 0)
                         {
-                            string fileName = yy.ToString("000") + "-" + xx.ToString("000") + ".tmx";
+                            string fileName = getMapName(xx, yy);
                             File.Delete(fileName);
                         }
                     }
@@ -341,7 +346,7 @@ namespace mapper
 
         private bool ProcessChunkIfNone(Bitmap img, Bitmap roads, int yy, int xx)
         {
-            string fileName = yy.ToString("000") + "-" + xx.ToString("000") + ".tmx";
+            string fileName = getMapName(xx, yy);
             if (!File.Exists(fileName))
             {
                 return ProcessChunk(img, roads, yy, xx);
@@ -351,7 +356,7 @@ namespace mapper
 
         private bool ProcessChunk(Bitmap img, Bitmap roads, int yy, int xx)
         {
-            string fileName = yy.ToString("000") + "-" + xx.ToString("000") + ".tmx";
+            string fileName = getMapName(xx, yy); 
             bool hasStuff = false;
 
             int[,] under = new int[64, 64];
@@ -362,10 +367,7 @@ namespace mapper
 
             using (var file = File.CreateText(fileName))
             {
-                file.WriteLine("<map version=\"1.0\" orientation=\"orthogonal\" width=\"64\" height=\"64\" tilewidth=\"64\" tileheight=\"64\">");
-                file.WriteLine("<tileset firstgid=\"1\" name=\"tile0002s\" tilewidth=\"64\" tileheight=\"64\">");
-                file.WriteLine("<image source=\"tile0002s.png\" width=\"1024\" height=\"1024\"/>");
-                file.WriteLine("</tileset>");
+                WriteHeader(file, 64, 64, false);
 
                 #region Under
                 file.WriteLine("<layer name=\"under\" width=\"64\" height=\"64\">");
@@ -516,11 +518,30 @@ namespace mapper
                 file.WriteLine("</layer>");
                 #endregion
 
+                #region Objects
+                file.WriteLine("<objectgroup name=\"objects\"></objectgroup>");
+                #endregion
+
                 file.WriteLine("</map>");
 
             }
 
             return hasStuff;
+        }
+
+        private void WriteHeader(StreamWriter file, int width, int height, bool isTemp)
+        {
+            file.WriteLine("<map version=\"1.0\" orientation=\"orthogonal\" width=\"" + width.ToString() + "\" height=\"" + height.ToString() + "\" tilewidth=\"64\" tileheight=\"64\">");
+            file.WriteLine("<tileset firstgid=\"1\" name=\"tile0002s\" tilewidth=\"64\" tileheight=\"64\">");
+            if (isTemp)
+            {
+                file.WriteLine("<image source=\"tile0002s.png\" width=\"1024\" height=\"1024\"/>");
+            }
+            else
+            {
+                file.WriteLine("<image source=\"..\\..\\..\\tiles\\tile0002s.png\" width=\"1024\" height=\"1024\"/>");
+            }
+            file.WriteLine("</tileset>");
         }
 
 
@@ -597,7 +618,7 @@ namespace mapper
                 {
                     for (int x = xx > 0 ? xx - 1 : 0; x <= (xx < width - 2 ? xx + 1 : width - 1); x++)
                     {
-                        fileName = y.ToString("000") + "-" + x.ToString("000") + ".tmx";
+                        fileName = getMapName(x, y);
                         int modx = (x < xx) ? 0 : ((x > xx) ? 2 : 1);
                         int mody = (y < yy) ? 0 : ((y > yy) ? 2 : 1);
 
@@ -746,7 +767,7 @@ namespace mapper
                 {
                     for (int x = xx > 0 ? xx - 1 : 0; x <= (xx < width - 2 ? xx + 1 : width - 1); x++)
                     {
-                        fileName = y.ToString("000") + "-" + x.ToString("000") + ".tmx";
+                        fileName = getMapName(x, y);
                         int modx = (x < xx) ? 0 : ((x > xx) ? 2 : 1);
                         int mody = (y < yy) ? 0 : ((y > yy) ? 2 : 1);
 
@@ -1189,10 +1210,7 @@ namespace mapper
         {
             using (var file = File.CreateText(fileName))
             {
-                file.WriteLine("<map version=\"1.0\" orientation=\"orthogonal\" width=\""+width.ToString()+"\" height=\""+width.ToString()+"\" tilewidth=\"64\" tileheight=\"64\">");
-                file.WriteLine("<tileset firstgid=\"1\" name=\"tile0002s\" tilewidth=\"64\" tileheight=\"64\">");
-                file.WriteLine("<image source=\"tile0002s.png\" width=\"1024\" height=\"1024\"/>");
-                file.WriteLine("</tileset>");
+                WriteHeader(file, width, width, width>64);
 
                 #region Under
                 file.WriteLine("<layer name=\"under\" width=\"" + width.ToString() + "\" height=\"" + width.ToString()+ "\">");
@@ -1279,7 +1297,7 @@ namespace mapper
             {
                 int xx = them[0];
                 int yy = them[1];
-                string fileName = yy.ToString("000") + "-" + xx.ToString("000") + ".tmx";
+                string fileName = getMapName(xx, yy);
                 toolLabel.Text = fileName;
             }
         }
@@ -1296,7 +1314,7 @@ namespace mapper
                     int xx = them[0];
                     int yy = them[1];
 
-                    string fileName = yy.ToString("000") + "-" + xx.ToString("000") + ".tmx";
+                    string fileName = getMapName(xx, yy);
                     var myProcess = new Process { StartInfo = new ProcessStartInfo("C:\\Program Files (x86)\\Tiled\\tiled.exe", fileName) };
                     myProcess.Start();
                     myProcess.WaitForExit();

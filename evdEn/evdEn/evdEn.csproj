@@ -18,6 +18,7 @@
     <XnaOutputType>Game</XnaOutputType>
     <ApplicationIcon>Game.ico</ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -30,7 +31,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -117,6 +117,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
+    <Compile Include="Readers\tmxTypeReader.cs" />
     <Compile Include="ScreenManager\BackgroundScreen.cs" />
     <Compile Include="ScreenManager\DialogBoxScreen.cs" />
     <Compile Include="ScreenManager\GameplayScreen.cs" />
@@ -137,6 +138,10 @@
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\evdEnData\evdEnData.csproj">
+      <Project>{30932372-D82A-41B5-8C53-569F29E65CD8}</Project>
+      <Name>evdEnData</Name>
+    </ProjectReference>
     <ProjectReference Include="..\evdEnContent\evdEnContent.contentproj">
       <Name>evdEnContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>
