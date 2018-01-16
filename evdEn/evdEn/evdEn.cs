@@ -100,6 +100,9 @@ namespace evdEn
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            evdGame theGame = Content.Load<evdGame>("Evdokim");
+
+
             evdEnUI.LoadContent(this.Content);
         }
 

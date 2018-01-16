@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("evdEn")]
-[assembly: AssemblyProduct("evdEn")]
+[assembly: AssemblyTitle("evdEnData")]
+[assembly: AssemblyProduct("evdEnData")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyCompany("Oleksiy Stadnik")]
-[assembly: AssemblyCopyright("Copyright © Oleksiy Stadnik 2018")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 // On Windows, the following GUID is for the ID of the typelib if this
 // project is exposed to COM. On other platforms, it unique identifies the
 // title storage container when deploying this assembly to the device.
-[assembly: Guid("6f806f3e-97f4-47c0-9173-d3fd67c0f631")]
+[assembly: Guid("db71dee4-fc85-4ea2-8c1e-b0f2088e9ebc")]
 
 // Version information for an assembly consists of the following four values:
 //

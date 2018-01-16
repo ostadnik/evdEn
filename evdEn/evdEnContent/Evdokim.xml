@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+  <Asset Type="evdEnData.evdGame">
+    <name>Evdokim</name>
+    <x>0</x>
+    <y>0</y>
+    <GameFolder>GAME\</GameFolder>
+    <Maps_OpenWorld>GAME\MAPS\WORLD\</Maps_OpenWorld>
+    <Maps>GAME\MAPS\DUNG\</Maps>
+    <Thumbnail></Thumbnail>
+    <StartDung>StartCell</StartDung>
+    <StartX>1</StartX>
+    <StartY>1</StartY>
+    <NewGameActions>
+      <Item>showImage:startNew1</Item>
+      <Item>delay:10</Item>
+      <Item>screen:CharacterCreate</Item>
+      <Item>map:StartDung</Item>
+    </NewGameActions>
+    <ContinueActions>
+      <Item>showImage:startCont1</Item>
+      <Item>delay:3</Item>
+    </ContinueActions>
+  </Asset>
+</XnaContent>

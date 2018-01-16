@@ -7,10 +7,15 @@ namespace evdEnData
 {
     public class evdGame : evdObject
     {
-        string GameFolder;
-        string Maps_OpenWorld;
-        string Maps;
-        string Thumbnail;
+        public string GameFolder;
+        public string Maps_OpenWorld;
+        public string Maps;
+        public string Thumbnail;
+        public string StartDung;
+        public int StartX;
+        public int StartY;
+        public string[] NewGameActions;
+        public string[] ContinueActions = null;
 
         public evdGame() : base()
         {

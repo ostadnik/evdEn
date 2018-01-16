@@ -25,9 +25,7 @@ namespace evdEnPipeline
     {
         public override TImport Import(string filename, ContentImporterContext context)
         {
-            // TODO: read the specified file into an instance of the imported type.
-            //throw new NotImplementedException();
-            return new evdEnData.evdMap();
+            return evdEnData.evdMap.Load(filename);
         }
     }
 }

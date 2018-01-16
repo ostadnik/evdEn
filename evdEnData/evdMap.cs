@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
+
 
 namespace evdEnData
 {
@@ -16,7 +18,8 @@ namespace evdEnData
 
         public static evdMap Load(string fileName)
         {
-            
+            XmlDocument map = new XmlDocument();
+            map.Load(fileName);
             return new evdMap();
         }
     }
