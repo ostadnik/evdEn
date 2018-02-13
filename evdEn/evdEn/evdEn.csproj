@@ -117,12 +117,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
+    <Compile Include="Readers\tilesetTypeReader.cs" />
     <Compile Include="Readers\tmxTypeReader.cs" />
     <Compile Include="ScreenManager\BackgroundScreen.cs" />
     <Compile Include="ScreenManager\DialogBoxScreen.cs" />
+    <Compile Include="ScreenManager\LoadSaveScreen.cs" />
+    <Compile Include="ScreenManager\ToonMenuScreen.cs" />
     <Compile Include="ScreenManager\GameplayScreen.cs" />
     <Compile Include="ScreenManager\GameScreen.cs" />
-    <Compile Include="ScreenManager\LoadingScreen.cs" />
+    <Compile Include="ScreenManager\SmthLoadingScreen.cs" />
     <Compile Include="ScreenManager\MainMenuScreen.cs" />
     <Compile Include="ScreenManager\MenuScreen.cs" />
     <Compile Include="ScreenManager\MessageBoxScreen.cs" />

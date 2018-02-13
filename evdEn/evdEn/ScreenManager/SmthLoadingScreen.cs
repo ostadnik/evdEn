@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Net;
+using Microsoft.Xna.Framework.Content;
 
 namespace evdEn
 {
@@ -21,7 +22,7 @@ namespace evdEn
     ///   next screen, which may take a long time to load its data. The loading
     ///   screen will be the only thing displayed while this load is taking place.
     /// </summary>
-    class LoadingScreen : GameScreen
+    class SmthLoadingScreen : GameScreen
     {
         #region Fields
 
@@ -29,6 +30,8 @@ namespace evdEn
         bool otherScreensAreGone;
 
         GameScreen[] screensToLoad;
+
+        Texture2D backgroundTexture = null;
 
         Thread backgroundThread;
         EventWaitHandle backgroundThreadExit;
@@ -47,11 +50,15 @@ namespace evdEn
         /// The constructor is private: loading screens should
         /// be activated via the static Load method instead.
         /// </summary>
-        private LoadingScreen(ScreenManager screenManager, bool loadingIsSlow,
+        private SmthLoadingScreen(ScreenManager screenManager, string bkgText, bool loadingIsSlow,
                               GameScreen[] screensToLoad)
         {
             this.loadingIsSlow = loadingIsSlow;
             this.screensToLoad = screensToLoad;
+
+            ContentManager content = new ContentManager(screenManager.Game.Services, "Content");
+            if (null!=content)
+                backgroundTexture = content.Load<Texture2D>(bkgText);
 
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
 
@@ -72,7 +79,7 @@ namespace evdEn
         /// <summary>
         /// Activates the loading screen.
         /// </summary>
-        public static void Load(ScreenManager screenManager, bool loadingIsSlow,
+        public static void LoadSmth(ScreenManager screenManager, string bkgText, bool loadingIsSlow,
                                 PlayerIndex? controllingPlayer,
                                 params GameScreen[] screensToLoad)
         {
@@ -80,8 +87,23 @@ namespace evdEn
             foreach (GameScreen screen in screenManager.GetScreens())
                 screen.ExitScreen();
 
+            string s = bkgText;
+            if (bkgText.IndexOf('{') >= 0)
+            {
+                s = bkgText.Substring(0, bkgText.IndexOf('{'));
+                string ss = bkgText.Substring(bkgText.IndexOf('{') + 1);
+                ss = ss.Substring(0, ss.Length - 1);
+                string sss = ss.Substring(0, ss.IndexOf('-'));
+                int i = int.Parse(sss);
+                sss = ss.Substring(ss.IndexOf('-') + 1);
+                int j = int.Parse(sss);
+                i = evdEnGlobals.random.Next(i, j + 1);
+                s = s + i.ToString();
+            }
+
             // Create and activate the loading screen.
-            LoadingScreen loadingScreen = new LoadingScreen(screenManager,
+            SmthLoadingScreen loadingScreen = new SmthLoadingScreen(screenManager,
+                                                            evdEnGlobals.theGame.GameFolder + s,
                                                             loadingIsSlow,
                                                             screensToLoad);
 
@@ -171,7 +193,12 @@ namespace evdEn
                 loadAnimationTimer += gameTime.ElapsedGameTime;
                 int framesCount = ((int)(loadAnimationTimer.TotalSeconds / evdEnUI.loadingFPS)) % evdEnUI.loadingFramesCount;
 
-                // Draw the text.
+                // Draw the text
+                spriteBatch.Begin();
+                spriteBatch.Draw(backgroundTexture, new Rectangle(0, 0, ScreenManager.GraphicsDevice.Viewport.Width, ScreenManager.GraphicsDevice.Viewport.Height), Color.White);
+                spriteBatch.End();
+            
+
                 spriteBatch.Begin();
                 spriteBatch.Draw(evdEnUI.loadingFrames,
                     evdEnUI.loadingDest,

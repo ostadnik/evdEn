@@ -151,6 +151,15 @@ namespace evdEn {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Return to Game?.
+        /// </summary>
+        internal static string msgReturnToGame {
+            get {
+                return ResourceManager.GetString("msgReturnToGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to   Music.
         /// </summary>
         internal static string optMenuMusic {

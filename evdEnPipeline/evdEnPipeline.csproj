@@ -50,6 +50,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="tilesetImporter.cs" />
+    <Compile Include="tilesetProcessor.cs" />
+    <Compile Include="tilesetTypeWriter.cs" />
     <Compile Include="tmxImporter.cs" />
     <Compile Include="tmxProcessor.cs" />
     <Compile Include="tmxTypeWriter.cs" />

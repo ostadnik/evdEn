@@ -10,18 +10,18 @@ namespace evdEn
     /// screen, and gives the user a chance to configure the game
     /// in various hopefully useful ways.
     /// </summary>
-    public class OptionsMenuScreen : MenuScreen
+    public class ToonMenuScreen : MenuScreen
     {
         #region Fields
 
+        bool newMode;
+
         MenuEntryList ratingEntry;
-        MenuEntryCheckBox captionsEntry;
-        MenuEntryHSlider musicVolumeEntry;
-        MenuEntryHSlider effectVolumeEntry;
-        MenuEntryHSlider speachVolumeEntry;
 
         ContentManager content = null;
         Texture2D backgroundTexture = null;
+        Vector2 bkgTexturePos;
+
 
         #endregion
 
@@ -31,20 +31,19 @@ namespace evdEn
         /// <summary>
         /// Constructor.
         /// </summary>
-        public OptionsMenuScreen()
-            : base("Options")
+        public ToonMenuScreen(bool aNewMode)
+            : base(aNewMode ? "New Character" : "Character Screen")
         {
+            newMode = aNewMode;
 
-            List<string> sl = new List<string>() { "AO", "M", "T", "E10+", "E", "EC" };
+            List<string> sl = new List<string>() { "a", "b" };
+            sl.Add("ÌÝ");
+            sl.Add("ÆÎ");
 
             LabelWidth = 200;
 
             // Create our menu entries.
             ratingEntry = new MenuEntryList(Messages.optMenuRating, sl, evdEnGlobals.Options.Rating);
-            captionsEntry = new MenuEntryCheckBox(Messages.optMenuSubtitles, evdEnGlobals.Options.ShowCaptions);
-            musicVolumeEntry = new MenuEntryHSlider(Messages.optMenuMusic, 0, 100, (int)(evdEnGlobals.Options.MusicVolume*100));
-            effectVolumeEntry = new MenuEntryHSlider(Messages.optMenuSFX, 0, 100, (int)(evdEnGlobals.Options.EffectVolume * 100));
-            speachVolumeEntry = new MenuEntryHSlider(Messages.optMenuSpeach, 0, 100, (int)(evdEnGlobals.Options.SpeachVolume * 100));
 
             MenuEntry backMenuEntry = new MenuEntry(Messages.msgGoBack);
 
@@ -52,14 +51,9 @@ namespace evdEn
 
             // Hook up menu event handlers.
             backMenuEntry.Selected += BackMenuEntrySelected;
-            
+
             // Add entries to the menu.
             MenuEntries.Add(ratingEntry);
-            MenuEntries.Add(captionsEntry);
-            MenuEntries.Add(new MenuEntry(Messages.optMenuVolumes, true));
-            MenuEntries.Add(musicVolumeEntry);
-            MenuEntries.Add(effectVolumeEntry);
-            MenuEntries.Add(speachVolumeEntry);
             MenuEntries.Add(new MenuEntry(string.Empty, true));
             MenuEntries.Add(backMenuEntry);
             selectedEntry = 1;
@@ -71,7 +65,10 @@ namespace evdEn
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
             try
             {
-                backgroundTexture = content.Load<Texture2D>(("Backs\\options"));
+                backgroundTexture = content.Load<Texture2D>(("Backs\\toonScreen"));
+                bkgTexturePos = (new Vector2(ScreenManager.GraphicsDevice.Viewport.Width, ScreenManager.GraphicsDevice.Viewport.Height)
+                    - new Vector2(backgroundTexture.Width, backgroundTexture.Height)
+                    ) / 2;
             }
             catch
             {
@@ -85,12 +82,11 @@ namespace evdEn
             {
                 SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
                 Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
-                Rectangle fullscreen = new Rectangle(0, 0, viewport.Width, viewport.Height);
                 byte fade = TransitionAlpha;
 
                 spriteBatch.Begin();
 
-                spriteBatch.Draw(backgroundTexture, fullscreen, new Color(fade, fade, fade));
+                spriteBatch.Draw(backgroundTexture, bkgTexturePos, new Color(fade, fade, fade));
 
                 spriteBatch.End();
             }
@@ -109,14 +105,10 @@ namespace evdEn
 
         void BackMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            evdEnGlobals.Options.ShowCaptions = captionsEntry.Value;
-            evdEnGlobals.Options.Rating = ratingEntry.Value;
-            evdEnGlobals.Options.MusicVolume = (float)musicVolumeEntry.Value / 100.0f;
-            evdEnGlobals.Options.EffectVolume = (float)effectVolumeEntry.Value / 100.0f;
-            evdEnGlobals.Options.SpeachVolume = (float)speachVolumeEntry.Value / 100.0f;
-            
-            evdEnGlobals.SaveOptions();
-            
+            //evdEnGlobals.Options.Rating = ratingEntry.Value;
+
+            //evdEnGlobals.SaveOptions();
+
             base.OnCancel(sender, e);
         }
 

@@ -95,7 +95,9 @@ namespace evdEn
 
 
         #endregion
+
         public event EventHandler<ActiveMenuItemEventArgs> ActiveMenuItemChanged;
+        public event EventHandler<ActiveMenuItemEventArgs> ScreenExiting;
 
         #region Handle Input
 
@@ -103,6 +105,12 @@ namespace evdEn
         {
             if (ActiveMenuItemChanged != null)
                 ActiveMenuItemChanged(this, new ActiveMenuItemEventArgs(playerIndex, selectedEntry));
+        }
+
+        protected internal virtual void OnScreenExiting(PlayerIndex playerIndex)
+        {
+            if (ScreenExiting != null)
+                ScreenExiting(this, new ActiveMenuItemEventArgs(playerIndex, selectedEntry));
         }
 
         /// <summary>
@@ -204,6 +212,7 @@ namespace evdEn
         protected virtual void OnCancel(PlayerIndex playerIndex)
         {
             ExitScreen();
+            OnScreenExiting(ControllingPlayer.HasValue ? ControllingPlayer.Value : PlayerIndex.One);
         }
 
 

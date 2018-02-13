@@ -2,24 +2,36 @@
 <XnaContent>
   <Asset Type="evdEnData.evdGame">
     <name>Evdokim</name>
+    <!-- have to pass those two even they not used atm -->
     <x>0</x>
     <y>0</y>
+    <!-- please put trailing slashes -->
     <GameFolder>GAME\</GameFolder>
-    <Maps_OpenWorld>GAME\MAPS\WORLD\</Maps_OpenWorld>
-    <Maps>GAME\MAPS\DUNG\</Maps>
+    <Maps_OpenWorld>MAPS\WORLD\</Maps_OpenWorld>
+    <Maps>MAPS\DUNG\</Maps>
+    <!-- base64 png -->
     <Thumbnail></Thumbnail>
+    <!-- if we want to start in open world dung name will be WORLD -->
     <StartDung>StartCell</StartDung>
-    <StartX>1</StartX>
-    <StartY>1</StartY>
+    <StartX>520</StartX>
+    <StartY>520</StartY>
+    <!-- lala -->
     <NewGameActions>
-      <Item>showImage:startNew1</Item>
-      <Item>delay:10</Item>
+      <!-- first item is always name of bkg pic to show during load -->
+      <Item>startNew{1-3}</Item>
+      <Item>delay:3</Item>
       <Item>screen:CharacterCreate</Item>
       <Item>map:StartDung</Item>
     </NewGameActions>
+    <!-- lalala -->
     <ContinueActions>
-      <Item>showImage:startCont1</Item>
+      <!-- first item is always name of bkg pic to show during load -->
+      <Item>startCont{1-2}</Item>
       <Item>delay:3</Item>
     </ContinueActions>
+    <!-- sorry for format, but too lazy to write custom importer -->
+    <Variables>
+      <Item>x=0</Item>
+    </Variables>
   </Asset>
 </XnaContent>

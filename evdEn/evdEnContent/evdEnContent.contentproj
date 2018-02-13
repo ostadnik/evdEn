@@ -4470,7 +4470,13 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="GAME\MAPS\DUNG\untitled.tsx">
+      <Name>untitled</Name>
+      <Importer>tilesetImporter</Importer>
+      <Processor>tilesetProcessor</Processor>
+    </Compile>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\evdEnData\evdEnData.csproj">
       <Project>{30932372-D82A-41B5-8C53-569F29E65CD8}</Project>
@@ -4494,6 +4500,45 @@
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <SubType>Designer</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Backs\toonScreen.png">
+      <Name>toonScreen</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GAME\startCont1.jpg">
+      <Name>startCont1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="GAME\startCont2.jpg">
+      <Name>startCont2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="GAME\startCont3.jpg">
+      <Name>startCont3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="GAME\startNew1.jpg">
+      <Name>startNew1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="GAME\startNew2.jpg">
+      <Name>startNew2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="GAME\startNew3.jpg">
+      <Name>startNew3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

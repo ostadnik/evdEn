@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using evdEnData;
+using Microsoft.Xna.Framework.Storage;
 
 namespace evdEn
 {
@@ -19,8 +20,9 @@ namespace evdEn
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        public ScreenManager screenManager;
 
+        IAsyncResult result;
+        bool storageRequested = false;
         bool zhopa = false;
         bool screenMgrAdded = false;
 
@@ -57,10 +59,10 @@ namespace evdEn
             evdEnGlobals.Options.MusicVolume = 0.5f;
             evdEnGlobals.Options.EffectVolume = 0.75f;
 
-            screenManager = new ScreenManager(this);
-            
-            screenManager.AddScreen(new BackgroundScreen(), null);
-            screenManager.AddScreen(new MainMenuScreen(), null);
+            evdEnGlobals.screenManager = new ScreenManager(this);
+
+            evdEnGlobals.screenManager.AddScreen(new BackgroundScreen(), null);
+            evdEnGlobals.screenManager.AddScreen(new MainMenuScreen(), null);
   
         }
 
@@ -99,9 +101,11 @@ namespace evdEn
             if (zhopa) this.Exit();
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            evdEnGlobals.textures=new Dictionary<string,Texture2D>(10);
 
-            evdGame theGame = Content.Load<evdGame>("Evdokim");
+            evdEnGlobals.theGame = Content.Load<evdGame>(evdEnGlobals.GameName);
 
+            evdMap map = evdMap.Load("E:\\old_lap\\Projects\\a.g.engine\\EvdEn\\evdEn\\evdEnContent\\GAME\\MAPS\\DUNG\\StartCell.tmx");
 
             evdEnUI.LoadContent(this.Content);
         }
@@ -113,6 +117,8 @@ namespace evdEn
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+            int cnt = evdEnGlobals.textures.Count;
+            Console.WriteLine(cnt);
         }
 
         /// <summary>
@@ -133,8 +139,20 @@ namespace evdEn
 
             if (!screenMgrAdded)
             {
-                Components.Add(screenManager);
+                Components.Add(evdEnGlobals.screenManager);
                 screenMgrAdded = true;
+            }
+
+            if (((null == evdEnGlobals.Storage) || !evdEnGlobals.Storage.IsConnected) && !storageRequested)
+            {
+                storageRequested = true;
+                result = StorageDevice.BeginShowSelector(PlayerIndex.One, null, null);
+            }
+
+            if (storageRequested && result.IsCompleted)
+            {
+                evdEnGlobals.Storage = StorageDevice.EndShowSelector(result);
+                storageRequested = false;
             }
 
             base.Update(gameTime);

@@ -1008,44 +1008,44 @@ namespace mapper
 
             foreach (XmlElement elem in xdoc.GetElementsByTagName("layer"))
             {
-                string name = elem.GetAttribute("name");
+                string layerName = elem.GetAttribute("name");
 
-                int i = 0;
-                int j = 0;
-
-                foreach (XmlElement eee in elem.GetElementsByTagName("data"))
+                foreach (XmlElement layerData in elem.GetElementsByTagName("data"))
                 {
-                    LoadThatData(under, ground, on, over, coll, name, ref i, ref j, eee, 64);
+                    LoadThatData(under, ground, on, over, coll, layerName, layerData, 64);
                 }
             }
         }
 
-        private void LoadThatData(int[,] under, int[,] ground, int[,] on, int[,] over, int[,] coll, string name, ref int i, ref int j, XmlElement eee, int width)
+        private void LoadThatData(int[,] under, int[,] ground, int[,] on, int[,] over, int[,] coll, string layerName, XmlElement layerData, int width)
         {
-            string baseEncode = eee.GetAttribute("encoding");
+            int i = 0;
+            int j = 0;
+
+            string baseEncode = layerData.GetAttribute("encoding");
 
             if (string.IsNullOrEmpty(baseEncode))
             {
-                foreach (XmlElement ee in eee.GetElementsByTagName("tile"))
+                foreach (XmlElement ee in layerData.GetElementsByTagName("tile"))
                 {
                     string s = ee.GetAttribute("gid");
-                    if (name.Equals("under"))
+                    if (layerName.Equals("under"))
                     {
                         under[i, j] = int.Parse(s);
                     }
-                    else if (name.Equals("ground"))
+                    else if (layerName.Equals("ground"))
                     {
                         ground[i, j] = int.Parse(s);
                     }
-                    else if (name.Equals("on"))
+                    else if (layerName.Equals("on"))
                     {
                         on[i, j] = int.Parse(s);
                     }
-                    else if (name.Equals("over"))
+                    else if (layerName.Equals("over"))
                     {
                         over[i, j] = int.Parse(s);
                     }
-                    else if (name.Equals("collision"))
+                    else if (layerName.Equals("collision"))
                     {
                         coll[i, j] = int.Parse(s);
                         if (coll[i, j] != 0 && coll[i, j] != 255 && coll[i, j] != 256) coll[i, j] = 0;
@@ -1059,33 +1059,33 @@ namespace mapper
                     }
                 }
             }
-            else if (baseEncode.Equals("base64"))
+            else if (baseEncode.Equals("base64", StringComparison.InvariantCultureIgnoreCase))
             {
-                string compression = eee.GetAttribute("compression");
-                string ss = eee.InnerText;
+                string compression = layerData.GetAttribute("compression");
+                string ss = layerData.InnerText;
                 Byte[] data = Convert.FromBase64String(ss);
 
                 if (string.IsNullOrEmpty(compression))
                 {
                     for (int iData = 0; iData < data.Length; iData += sizeof(UInt32))
                     {
-                        if (name.Equals("under"))
+                        if (layerName.Equals("under"))
                         {
                             under[i, j] = BitConverter.ToInt32(data, iData);
                         }
-                        else if (name.Equals("ground"))
+                        else if (layerName.Equals("ground"))
                         {
                             ground[i, j] = BitConverter.ToInt32(data, iData);
                         }
-                        else if (name.Equals("on"))
+                        else if (layerName.Equals("on"))
                         {
                             on[i, j] = BitConverter.ToInt32(data, iData);
                         }
-                        else if (name.Equals("over"))
+                        else if (layerName.Equals("over"))
                         {
                             over[i, j] = BitConverter.ToInt32(data, iData);
                         }
-                        else if (name.Equals("collision"))
+                        else if (layerName.Equals("collision"))
                         {
                             coll[i, j] = BitConverter.ToInt32(data, iData);
                             if (coll[i, j] != 0 && coll[i, j] != 255 && coll[i, j] != 256) coll[i, j] = 0;
@@ -1099,29 +1099,29 @@ namespace mapper
                         }
                     }
                 }
-                else if (compression.Equals("gzip"))
+                else if (compression.Equals("gzip", StringComparison.InvariantCultureIgnoreCase))
                 {
                     GZipStream gz = new GZipStream(new MemoryStream(data), CompressionMode.Decompress);
                     Byte[] buffer = new Byte[sizeof(UInt32)];
                     while (gz.Read(buffer, 0, buffer.Length) == buffer.Length)
                     {
-                        if (name.Equals("under"))
+                        if (layerName.Equals("under"))
                         {
                             under[i, j] = BitConverter.ToInt32(buffer, 0);
                         }
-                        else if (name.Equals("ground"))
+                        else if (layerName.Equals("ground"))
                         {
                             ground[i, j] = BitConverter.ToInt32(buffer, 0);
                         }
-                        else if (name.Equals("on"))
+                        else if (layerName.Equals("on"))
                         {
                             on[i, j] = BitConverter.ToInt32(buffer, 0);
                         }
-                        else if (name.Equals("over"))
+                        else if (layerName.Equals("over"))
                         {
                             over[i, j] = BitConverter.ToInt32(buffer, 0);
                         }
-                        else if (name.Equals("collision"))
+                        else if (layerName.Equals("collision"))
                         {
                             coll[i, j] = BitConverter.ToInt32(buffer, 0);
                             if (coll[i, j] != 0 && coll[i, j] != 255 && coll[i, j] != 256) coll[i, j] = 0;
@@ -1135,7 +1135,7 @@ namespace mapper
                         }
                     }
                 }
-                else if (compression.Equals("zlib"))
+                else if (compression.Equals("zlib", StringComparison.InvariantCultureIgnoreCase))
                 {
                     // zlib data - first two bytes zlib specific and not part of deflate
                     MemoryStream ms = new MemoryStream(data);
@@ -1145,23 +1145,23 @@ namespace mapper
                     Byte[] buffer = new Byte[sizeof(UInt32)];
                     while (gz.Read(buffer, 0, buffer.Length) == buffer.Length)
                     {
-                        if (name.Equals("under"))
+                        if (layerName.Equals("under"))
                         {
                             under[i, j] = BitConverter.ToInt32(buffer, 0);
                         }
-                        else if (name.Equals("ground"))
+                        else if (layerName.Equals("ground"))
                         {
                             ground[i, j] = BitConverter.ToInt32(buffer, 0);
                         }
-                        else if (name.Equals("on"))
+                        else if (layerName.Equals("on"))
                         {
                             on[i, j] = BitConverter.ToInt32(buffer, 0);
                         }
-                        else if (name.Equals("over"))
+                        else if (layerName.Equals("over"))
                         {
                             over[i, j] = BitConverter.ToInt32(buffer, 0);
                         }
-                        else if (name.Equals("collision"))
+                        else if (layerName.Equals("collision"))
                         {
                             coll[i, j] = BitConverter.ToInt32(buffer, 0);
                             if (coll[i, j] != 0 && coll[i, j] != 255 && coll[i, j] != 256) coll[i, j] = 0;
@@ -1181,6 +1181,45 @@ namespace mapper
                     MessageBox.Show("Great unknown \"" + compression + "\" for compression");
                 }
             }
+            else if (baseEncode.Equals("csv", StringComparison.InvariantCultureIgnoreCase))
+            {
+                string s = layerData.InnerText;
+                var ss = s.Split(new Char[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                for (int iData = 0; iData < ss.Length; iData ++)
+                {
+                    int data;
+                    if (!int.TryParse(ss[iData], out data)) continue;
+                    if (layerName.Equals("under"))
+                    {
+                        under[i, j] = data;
+                    }
+                    else if (layerName.Equals("ground"))
+                    {
+                        ground[i, j] = data;
+                    }
+                    else if (layerName.Equals("on"))
+                    {
+                        on[i, j] = data;
+                    }
+                    else if (layerName.Equals("over"))
+                    {
+                        over[i, j] = data;
+                    }
+                    else if (layerName.Equals("collision"))
+                    {
+                        coll[i, j] = data;
+                        if (coll[i, j] != 0 && coll[i, j] != 255 && coll[i, j] != 256) coll[i, j] = 0;
+                    }
+
+                    i++;
+                    if (i >= width)
+                    {
+                        i = 0;
+                        j++;
+                    }
+                }
+
+            }
             else
             {
                 MessageBox.Show("Great unknown \"" + baseEncode + "\" for encoding");
@@ -1196,12 +1235,9 @@ namespace mapper
             {
                 string name = elem.GetAttribute("name");
 
-                int i = 0;
-                int j = 0;
-
                 foreach (XmlElement eee in elem.GetElementsByTagName("data"))
                 {
-                    LoadThatData(under, ground, on, over, coll, name, ref i, ref j, eee, 128);
+                    LoadThatData(under, ground, on, over, coll, name, eee, 128);
                 }
             }
         }

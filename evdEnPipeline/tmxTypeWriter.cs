@@ -24,18 +24,69 @@ namespace evdEnPipeline
     {
         protected override void Write(ContentWriter output, TWrite value)
         {
-            // TODO: write the specified value to the output ContentWriter.
+            // props
             output.Write(value.name);
             output.Write(value.x);
             output.Write(value.y);
             output.Write(value.isWorld);
+
+            output.Write(value.height);
+            output.Write(value.width);
+            output.Write(value.tileHeight);
+            output.Write(value.tileWidth);
+
+            // map data
+            for (int j = 0; j < value.height; j++)
+            {
+                for (int i = 0; i < value.width; i++)
+                {
+                    output.Write(value.underLayer[i, j]);
+                    output.Write(value.groundLayer[i, j]);
+                    output.Write(value.onLayer[i, j]);
+                    output.Write(value.overLayer[i, j]);
+                    output.Write(value.collision[i, j]);
+                }
+            }
+
+            // tiles info
+            Int32 cnt = value.tileSets.Count;
+            output.Write(cnt);
+            for (int i = 0; i < cnt; i++)
+            {
+                output.Write(value.tileSets[i].name);
+                output.Write(value.tileSets[i].x);
+                output.Write(value.tileSets[i].y);
+                output.Write(value.tileSets[i].firstGid);
+            }
+
+            // objects
+            cnt = value.objects.Count;
+            output.Write(cnt);
+            for (int j = 0; j < cnt; j++)
+            {
+                output.Write(value.objects[j]);
+            }
+
+            // properties
+            cnt = value.properties.Count;
+            output.Write(cnt);
+            foreach(var pair in value.properties)
+            {
+                output.Write(pair.Key);
+                output.Write(pair.Value);
+            }
+
+            // just in case
+            // terminator
+            output.Write(0L);
+            output.Write(0L);
+            output.Write(0L);
+            output.Write(0L);
         }
 
         public override string GetRuntimeReader(TargetPlatform targetPlatform)
         {
-            // TODO: change this to the name of your ContentTypeReader
-            // class which will be used to load this data.
-            return "evdEn.tmxContentReader, evdEn";
+            return "evdEn.tmxTypeReader, evdEn";
         }
     }
 }

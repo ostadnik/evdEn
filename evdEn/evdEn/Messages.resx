@@ -147,6 +147,9 @@
   <data name="msgGoBack" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="msgReturnToGame" xml:space="preserve">
+    <value>Return to Game?</value>
+  </data>
   <data name="optMenuMusic" xml:space="preserve">
     <value>  Music</value>
   </data>

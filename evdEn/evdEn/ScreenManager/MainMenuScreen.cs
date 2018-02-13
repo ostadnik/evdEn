@@ -57,8 +57,8 @@ namespace evdEn
         /// </summary>
         void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
-                                new GameplayScreen());
+            SmthLoadingScreen.LoadSmth(ScreenManager, evdEnGlobals.theGame.NewGameActions[0], true, e.PlayerIndex,
+                                new GameplayScreen(true));
         }
 
         /// <summary>
@@ -66,9 +66,25 @@ namespace evdEn
         /// </summary>
         void LoadGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            //ScreenManager.AddScreen(new LoadSaveScreen(LoadSaveMode.Load, "Load Game"), e.PlayerIndex);
+            LoadSaveScreen lss = new LoadSaveScreen(LoadSaveMode.Load, "Load Game");
+            lss.ScreenExiting += LoadGameMenuEntryContinued;
+            ScreenManager.AddScreen(lss, e.PlayerIndex);
         }
 
+        /// <summary>
+        /// Event handler for when the Load Game menu entry is selected.
+        /// </summary>
+        void LoadGameMenuEntryContinued(object sender, ActiveMenuItemEventArgs e)
+        {
+            LoadSaveScreen lss = (LoadSaveScreen)sender;
+            string ls = lss.chosenOne.Trim();
+            if (lss.isConfirmed && !string.IsNullOrEmpty(ls))
+            {
+                lss = null;
+                SmthLoadingScreen.LoadSmth(ScreenManager, evdEnGlobals.theGame.ContinueActions[0], true, e.PlayerIndex,
+                         new GameplayScreen(false, ls));
+            }
+        }
 
         /// <summary>
         /// Event handler for when the Options menu entry is selected.
@@ -84,9 +100,9 @@ namespace evdEn
         /// </summary>
         protected override void OnCancel(PlayerIndex playerIndex)
         {
-            MessageBoxScreen confirmExitMessageBox = new MessageBoxScreen(Messages.msgExitConfirm);
+            MessageBoxScreen confirmExitMessageBox = new MessageBoxScreen(Messages.msgExitConfirm, MsgBoxOptions.boxYesNo);
 
-            confirmExitMessageBox.Accepted += ConfirmExitMessageBoxAccepted;
+            confirmExitMessageBox.Yessed += ConfirmExitMessageBoxAccepted;
 
             ScreenManager.AddScreen(confirmExitMessageBox, playerIndex);
         }

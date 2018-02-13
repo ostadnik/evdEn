@@ -27,9 +27,13 @@ namespace evdEn
         public static AudioCategory musicCategory;
         public static AudioCategory effectCategory;
         public static AudioCategory speachCategory;
-        public static string GameName = "feep";
+        public static string GameName = "Evdokim";
         public const string OptionsFileName = "options.feep";
         public static StorageDevice Storage = null;
+        public static ScreenManager screenManager = null;
+        public static Dictionary<string, Texture2D> textures = null;
+        public static evdGame theGame = null;
+        public static evdRunningGame myGame;
 
         //public static feepData.dsGame theGame = null;
 
