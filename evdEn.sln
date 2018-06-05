@@ -2,14 +2,25 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "evdEn", "evdEn\evdEn\evdEn.csproj", "{8DD1587C-1A62-4702-BA8F-6EBA1992780C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{250CAED9-3946-44CC-AA3F-47D64E6F1874} = {250CAED9-3946-44CC-AA3F-47D64E6F1874}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "evdEnContent", "evdEn\evdEnContent\evdEnContent.contentproj", "{E1D6E5B0-32E9-4F32-B02E-DD66DE267BB8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mapper", "mapper\mapper.csproj", "{05FA703A-08C6-4DB6-8F3F-DE0480B0506E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "evdEnPipeline", "evdEnPipeline\evdEnPipeline.csproj", "{8DCEDD12-EBDA-4331-9F7F-9442EE3B98B3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{250CAED9-3946-44CC-AA3F-47D64E6F1874} = {250CAED9-3946-44CC-AA3F-47D64E6F1874}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "evdEnData", "evdEnData\evdEnData.csproj", "{30932372-D82A-41B5-8C53-569F29E65CD8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{250CAED9-3946-44CC-AA3F-47D64E6F1874} = {250CAED9-3946-44CC-AA3F-47D64E6F1874}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yaml", "Yaml\Yaml.csproj", "{250CAED9-3946-44CC-AA3F-47D64E6F1874}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +46,10 @@ Global
 		{30932372-D82A-41B5-8C53-569F29E65CD8}.Debug|x86.Build.0 = Debug|x86
 		{30932372-D82A-41B5-8C53-569F29E65CD8}.Release|x86.ActiveCfg = Release|x86
 		{30932372-D82A-41B5-8C53-569F29E65CD8}.Release|x86.Build.0 = Release|x86
+		{250CAED9-3946-44CC-AA3F-47D64E6F1874}.Debug|x86.ActiveCfg = Debug|x86
+		{250CAED9-3946-44CC-AA3F-47D64E6F1874}.Debug|x86.Build.0 = Debug|x86
+		{250CAED9-3946-44CC-AA3F-47D64E6F1874}.Release|x86.ActiveCfg = Release|x86
+		{250CAED9-3946-44CC-AA3F-47D64E6F1874}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

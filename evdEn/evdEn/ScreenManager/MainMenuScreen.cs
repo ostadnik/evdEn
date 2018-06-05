@@ -58,7 +58,7 @@ namespace evdEn
         void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             SmthLoadingScreen.LoadSmth(ScreenManager, evdEnGlobals.theGame.NewGameActions[0], true, e.PlayerIndex,
-                                new GameplayScreen(true));
+                                new GameplayScreen(true), new ToonMenuScreen(true));
         }
 
         /// <summary>

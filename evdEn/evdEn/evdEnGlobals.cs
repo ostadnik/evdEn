@@ -33,9 +33,7 @@ namespace evdEn
         public static ScreenManager screenManager = null;
         public static Dictionary<string, Texture2D> textures = null;
         public static evdGame theGame = null;
-        public static evdRunningGame myGame;
-
-        //public static feepData.dsGame theGame = null;
+        public static evdRunningGame myGame = null;
 
         public static bool gamePaused = true;
 
@@ -151,6 +149,7 @@ namespace evdEn
         public float EffectVolume;
         public float SpeachVolume;
 
+        public bool smp;
     }
 
     public class GameEventArgs : EventArgs

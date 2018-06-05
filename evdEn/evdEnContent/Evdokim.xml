@@ -31,7 +31,9 @@
     </ContinueActions>
     <!-- sorry for format, but too lazy to write custom importer -->
     <Variables>
-      <Item>x=0</Item>
+      <Item>otherX=0</Item>
+      <Item>otherSex</Item>
+      <Item>otherYs=Yahho! </Item>
     </Variables>
   </Asset>
 </XnaContent>

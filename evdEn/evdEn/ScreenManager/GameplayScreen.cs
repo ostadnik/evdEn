@@ -94,15 +94,17 @@ namespace evdEn
 
                 }
 
-
             }
 
+            evdEnGlobals.myGame = evdEnGlobals.theGame.MakeItRun();
 
             // once the load has finished, we use ResetElapsedTime to tell the game's
             // timing mechanism that we have just finished a very long frame, and that
             // it should not try to catch up.
             ScreenManager.Game.ResetElapsedTime();
             evdEnGlobals.gamePaused = false;
+
+            //if (newGame) evdEnGlobals.screenManager.AddScreen(new ToonMenuScreen(true), this.ControllingPlayer);
         }
 
 
@@ -198,6 +200,9 @@ namespace evdEn
                     movement.Normalize();
 
                 playerPosition += movement * 2;
+
+                evdEnGlobals.myGame.x = playerPosition.X;
+                evdEnGlobals.myGame.y = playerPosition.Y;
             }
         }
 
@@ -225,21 +230,14 @@ namespace evdEn
                     result.AsyncWaitHandle.Close();
                     string filename = string.Format("save{0}.evden", evdEnGlobals.random.Next(10));
 
-                    // Check to see whether the save exists.
                     if (container.FileExists(filename))
-                        // Delete it so that we can create one fresh.
                         container.DeleteFile(filename);
 
-                    // Create the file.
                     Stream stream = container.CreateFile(filename);
-                    
 
-                    // Convert the object to XML data and put it in the stream.
-                    BinaryFormatter serializer = new BinaryFormatter();
-                    serializer.Serialize(stream, evdEnGlobals.theGame);
-                    // Close the file.
+                    evdEnData.evdRunningGame.Save(stream, evdEnGlobals.myGame);
+
                     stream.Close();
-                    // Dispose the container, to commit changes.
                     container.Dispose();
                 }
                 catch (Exception ex)

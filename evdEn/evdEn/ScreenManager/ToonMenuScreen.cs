@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using System;
 
 namespace evdEn
 {
@@ -34,12 +35,14 @@ namespace evdEn
         public ToonMenuScreen(bool aNewMode)
             : base(aNewMode ? "New Character" : "Character Screen")
         {
+            IsPopup = true;
+
+            TransitionOnTime = TimeSpan.FromSeconds(0.2);
+            TransitionOffTime = TimeSpan.FromSeconds(0.2);
             newMode = aNewMode;
 
-            List<string> sl = new List<string>() { "a", "b" };
-            sl.Add("ÌÝ");
-            sl.Add("ÆÎ");
-
+            List<string> sl = new List<string>() { "ÌÝ", "ÆÎ" };
+            
             LabelWidth = 200;
 
             // Create our menu entries.

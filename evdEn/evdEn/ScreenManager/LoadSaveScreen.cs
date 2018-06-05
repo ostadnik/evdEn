@@ -47,7 +47,7 @@ namespace evdEn
             MenuEntries.Add(exit);
             exit.Selected += OnCancel;
             ActiveMenuItemChanged += activeMenuItemChanged;
-            activeMenuItemChanged(null, new ActiveMenuItemEventArgs(PlayerIndex.One, 0);
+            activeMenuItemChanged(null, new ActiveMenuItemEventArgs(PlayerIndex.One, 0));
         }
 
         void activeMenuItemChanged(object sender,ActiveMenuItemEventArgs e)
