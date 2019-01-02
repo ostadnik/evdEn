@@ -20,9 +20,6 @@ namespace evdEn
         MenuEntryList ratingEntry;
 
         ContentManager content = null;
-        Texture2D backgroundTexture = null;
-        Vector2 bkgTexturePos;
-
 
         #endregion
 
@@ -46,7 +43,7 @@ namespace evdEn
             LabelWidth = 200;
 
             // Create our menu entries.
-            ratingEntry = new MenuEntryList(Messages.optMenuRating, sl, evdEnGlobals.Options.Rating);
+            ratingEntry = new MenuEntryList("Gender", sl, "ÆÎ");
 
             MenuEntry backMenuEntry = new MenuEntry(Messages.msgGoBack);
 
@@ -59,7 +56,7 @@ namespace evdEn
             MenuEntries.Add(ratingEntry);
             MenuEntries.Add(new MenuEntry(string.Empty, true));
             MenuEntries.Add(backMenuEntry);
-            selectedEntry = 1;
+            selectedEntry = 0;
         }
 
         public override void LoadContent()
@@ -68,32 +65,16 @@ namespace evdEn
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
             try
             {
-                backgroundTexture = content.Load<Texture2D>(("Backs\\toonScreen"));
-                bkgTexturePos = (new Vector2(ScreenManager.GraphicsDevice.Viewport.Width, ScreenManager.GraphicsDevice.Viewport.Height)
-                    - new Vector2(backgroundTexture.Width, backgroundTexture.Height)
-                    ) / 2;
+                this.BkgTexture = content.Load<Texture2D>(("Backs\\toonScreen"));
             }
             catch
             {
-                backgroundTexture = null;
+                Texture = null;
             }
         }
 
         public override void Draw(GameTime gameTime)
         {
-            if (null != backgroundTexture)
-            {
-                SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
-                Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
-                byte fade = TransitionAlpha;
-
-                spriteBatch.Begin();
-
-                spriteBatch.Draw(backgroundTexture, bkgTexturePos, new Color(fade, fade, fade));
-
-                spriteBatch.End();
-            }
-
             base.Draw(gameTime);
         }
 

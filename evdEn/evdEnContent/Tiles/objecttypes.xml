@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objecttypes>
+ <objecttype name="script" color="#00ff00"/>
+ <objecttype name="encounter" color="#ff0000"/>
+ <objecttype name="exit" color="#ffff00"/>
+ <objecttype name="dialog" color="#0000ff"/>
+</objecttypes>

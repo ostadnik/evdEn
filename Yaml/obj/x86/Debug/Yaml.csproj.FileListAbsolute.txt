@@ -1,0 +1,6 @@
+E:\old_lap\Projects\a.g.engine\EvdEn\Yaml\obj\x86\Debug\Yaml.csprojResolveAssemblyReference.cache
+E:\old_lap\Projects\a.g.engine\EvdEn\Yaml\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+E:\old_lap\Projects\a.g.engine\EvdEn\Yaml\bin\x86\Debug\Yaml.dll
+E:\old_lap\Projects\a.g.engine\EvdEn\Yaml\bin\x86\Debug\Yaml.pdb
+E:\old_lap\Projects\a.g.engine\EvdEn\Yaml\obj\x86\Debug\Yaml.dll
+E:\old_lap\Projects\a.g.engine\EvdEn\Yaml\obj\x86\Debug\Yaml.pdb

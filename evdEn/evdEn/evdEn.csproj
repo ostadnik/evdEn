@@ -145,6 +145,10 @@
       <Project>{30932372-D82A-41B5-8C53-569F29E65CD8}</Project>
       <Name>evdEnData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Yaml\Yaml.csproj">
+      <Project>{250CAED9-3946-44CC-AA3F-47D64E6F1874}</Project>
+      <Name>Yaml</Name>
+    </ProjectReference>
     <ProjectReference Include="..\evdEnContent\evdEnContent.contentproj">
       <Name>evdEnContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>

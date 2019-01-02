@@ -18,9 +18,11 @@ namespace evdEn
         string caption = string.Empty;
         Rectangle toolTipArea = Rectangle.Empty;
         Texture2D texture = null;
+        Texture2D bkgTexture = null;
         Texture2D activeTexture = null;
         Texture2D passiveTexture = null;
         Texture2D readonlyTexture = null;
+        Vector2 bkgTexturePos = new Vector2(0,0);
 
         #endregion
 
@@ -38,10 +40,31 @@ namespace evdEn
             set { toolTipArea = value; }
         }
 
+        public Texture2D BkgTexture
+        {
+            get { return bkgTexture; }
+            set
+            {
+                bkgTexture = value;
+                if (null == bkgTexture
+                    || bkgTexture.Width < ScreenManager.GraphicsDevice.Viewport.Width / 4
+                    || bkgTexture.Height < ScreenManager.GraphicsDevice.Viewport.Height / 4)
+                {
+                    bkgTexturePos = new Vector2(0, 0);
+                }
+                else
+                {
+                    bkgTexturePos = (new Vector2(ScreenManager.GraphicsDevice.Viewport.Width, ScreenManager.GraphicsDevice.Viewport.Height)
+                                    - new Vector2(bkgTexture.Width, bkgTexture.Height)
+                                    ) / 2;
+                }
+            }
+        }
+
         public Texture2D Texture
         {
-            get { return texture; }
-            set { texture = value; }
+            get { return activeTexture; }
+            set { activeTexture = value; }
         }
 
         public Texture2D ActiveTexture
@@ -256,7 +279,18 @@ namespace evdEn
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             SpriteFont font = ScreenManager.Font;
 
-            Vector2 position = new Vector2(100, 150);
+            if (null != bkgTexture)
+            {
+                byte fade = TransitionAlpha;
+
+                spriteBatch.Begin();
+
+                spriteBatch.Draw(bkgTexture, bkgTexturePos, new Color(fade, fade, fade));
+
+                spriteBatch.End();
+            }
+
+            Vector2 position = new Vector2(100, 150) + bkgTexturePos;
 
             // Make the menu slide into place during transitions, using a
             // power curve to make things look more interesting (this makes
@@ -283,7 +317,7 @@ namespace evdEn
             }
 
             // Draw the menu title.
-            Vector2 titlePosition = new Vector2(426, 80);
+            Vector2 titlePosition = new Vector2(426, 80) + bkgTexturePos;
             Vector2 titleOrigin = font.MeasureString(caption) / 2;
             Color titleColor = new Color(192, 192, 192, TransitionAlpha);
             float titleScale = 1.25f;
