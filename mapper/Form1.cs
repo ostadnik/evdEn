@@ -27,7 +27,7 @@ namespace mapper
 
         private string getMapName(int x, int y)
         {
-            return "..\\..\\evdEn\\evdEnContent\\GAME\\MAPS\\WORLD\\" + y.ToString("000") + "-" + x.ToString("000") + ".tmx";
+            return "..\\..\\evdEn\\evdEnContent\\GAME\\MAPS\\WORLD\\" + x.ToString("0000") + "-" + y.ToString("0000") + ".tmx";
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
